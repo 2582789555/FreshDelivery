@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.example.freshdeliveryserver.mappers.UserMapper">
+
+    <select id="findUserByEmail" resultType="org.example.freshdeliveryserver.entity.User">
+        select * from t_user where email = #{email}
+    </select>
+    <select id="findUserByUserId" resultType="org.example.freshdeliveryserver.entity.User">
+        select * from t_user where user_id = #{userId}
+    </select>
+    <select id="findAllUsers" resultType="org.example.freshdeliveryserver.entity.User">
+        select * from t_user limit #{pageNum},#{pageSize}
+    </select>
+    <select id="countUsers" resultType="int">
+        select count(*) from t_user
+    </select>
+
+
+    <insert id="addUser" parameterType="org.example.freshdeliveryserver.entity.User">
+        insert into t_user(username,email,password,role,phone,is_verified) values (#{user.username},#{user.email},#{user.password},#{user.role},#{user.phone},#{user.isVerified})
+    </insert>
+
+    <update id="updatePassword" parameterType="org.example.freshdeliveryserver.entity.User" >
+        update t_user set password = #{password} where email = #{email}
+    </update>
+    <update id="updateUser" parameterType="org.example.freshdeliveryserver.entity.User">
+        update t_user set username = #{username},phone = #{phone} where user_id = #{userId}
+    </update>
+    <update id="updateUserLocation">
+        update t_user set login_time = #{loginTime},latitude = #{latitude},longitude = #{longitude} where user_id = #{userId}
+    </update>
+
+
+    <delete id="deleteUserById" parameterType="java.lang.Integer">
+        delete from t_user where user_id = #{userId}
+    </delete>
+
+
+</mapper>

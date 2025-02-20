@@ -1,0 +1,12 @@
+401 认证失败
+403 权限不足
+
+《认证》
+先经过JwtFilter
+携带token则进行验证。成功时，到下一个过滤器。失败时，后端抛出类型异常，返还前端401错误。
+未携带token时，不进行验证，直接到下一个过滤器。
+《授权》
+设置了需要经过认证才能访问的端口。（此时已经经过JwtFilter,只有携带正确token以及不携带token的请求能到达此）
+    AppAccessDenyHandler：处理已认证用户但无权限访问资源的情况(403)
+    AppAuthenticationEntryPoint：处理未认证用户访问受保护资源的情况(401)
+    注意：AppAuthenticationSuccessHandler、AppAuthenticationFailHandler 为使用spring security默认表单登录时，成功与否的处理器。
